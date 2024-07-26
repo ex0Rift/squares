@@ -1,13 +1,13 @@
 from tkinter import *
-import random
-global health
+import random , time
+global health , hscore , sp
 
 
 set = Tk()
 
 
 def main():
-   global health
+   global health , num , score , sp
    root = Tk()
    root.focus_force()
    root.attributes('-fullscreen', True)
@@ -22,16 +22,33 @@ def main():
    x = 10
    y = 10
    s = 50
+   num=0
+   score=''
+   sp=speed.get()
 
 
+
+
+
+   def SCORE():
+       global num,score , sp
+
+       multi=(550*(sp/100))
+       print(multi)
+       multi=int(multi)
+       lives.delete(score)
+       score = lives.create_text(165, 25, text=num, font=('Helvetica 30 '),fill='gray100')
+       num=num+1
+       root.after(multi,SCORE)
 
 
    def DEL():
        items = canvas.find_all()
        items=list(items)
-       r=random.randint(1,items[-1])
-       if r!=1:
-           canvas.itemconfig(r, state='hidden')
+       for i in range(2):
+           r=random.randint(1,items[-1])
+           if r!=1:
+               canvas.itemconfig(r, state='hidden')
 
 
        root.after(600,DEL)
@@ -67,24 +84,29 @@ def main():
            elif health == 0:
                print('dead')
                root.destroy()
+               set.deiconify()
+               a=1
+               restart()
        if a == 0:
            root.after(1, COL)
 
 
 
-
    def OBJ():
+       sp=speed.get()
        rx = random.randint(0, w)
        ry = random.randint(0, h)
        rs = random.randint(20, 250)
        canvas.create_rectangle(rx, ry, rx + rs, ry + rs, fill='orange')
-       root.after(200, OBJ)
+       root.after(sp, OBJ)
 
 
 
 
    def Exit():
        root.destroy()
+       set.deiconify()
+       restart()
 
 
 
@@ -100,21 +122,20 @@ def main():
 
 
 
-
    canvas = Canvas(root, width=w, height=h, bg='gray40')
    canvas.pack()
    box = canvas.create_rectangle(x, y, x + s, y + s, fill='green')
 
 
-   lives = Canvas(root, width=130, height=50, bg='deepskyblue3')
+   lives = Canvas(root, width=200, height=50, bg='deepskyblue3')
    lives.place(x=(10), y=(h - 65))
 
 
+   line=lives.create_line(130,0,130,55,fill='gray100',width=2)
    H1 = lives.create_rectangle(10, 10, 40, 40, fill='red')
    H2 = lives.create_rectangle(50, 10, 80, 40, fill='red')
    H3 = lives.create_rectangle(90, 10, 120, 40, fill='red')
-
-
+   SCORE()
    root.bind('<Motion>', motion)
    root.bind('<space>', lambda x: Exit())
 
@@ -133,12 +154,31 @@ def main():
 
 
 def START():
-   set.destroy()
+   set.withdraw()
    main()
 
 
 def QUIT():
    set.destroy()
+
+
+def HIGH():
+   file=open('data.txt','r')
+   hscore = file.readline().strip()
+   file.close()
+   return hscore
+
+
+def restart():
+   global num ,hscore
+   print('restart')
+   if num>int(hscore):
+       file = open('data.txt', 'w')
+       num = str(num)
+       file.write(num)
+       file.close()
+       hscore=num
+   score_dsip.config(text=f'score {num}\nhighscore {hscore}')
 
 
 wh=500
@@ -147,8 +187,7 @@ h = set.winfo_screenwidth()
 w = set.winfo_screenheight()
 x=(h-wh)//2
 y=(w-ww)//2
-
-
+hscore=HIGH()
 
 
 
@@ -160,10 +199,25 @@ set.geometry(f'{wh}x{ww}+{x}+{y}')
 
 start=Button(set,text='Start',command=START,bg='gray60',width=10)
 quit=Button(set,text='Quit',command=QUIT,bg='gray60',width=10)
+score_dsip=Label(set,text=(f'highscore {hscore}'),bg='gray40',font=('Helvetica 10 bold'))
+speed=Scale(set,from_=100,to=800,orient=HORIZONTAL,length=250,resolution=10,label='spawn speed',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
+
 start.place(x=20,y=190)
 quit.place(x=400,y=190)
+score_dsip.place(x=215,y=190)
+speed.place(x=125,y=100)
+speed.set(200)
 
 
 
 
 set.mainloop()
+
+
+'''
+file name is data.txt
+'''
+
+
+
+
