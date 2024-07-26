@@ -188,7 +188,7 @@ w = set.winfo_screenheight()
 x=(h-wh)//2
 y=(w-ww)//2
 hscore=HIGH()
-
+colours=['green','purple','gold','slateblue1']
 
 
 
@@ -202,12 +202,14 @@ quit=Button(set,text='Quit',command=QUIT,bg='gray60',width=10)
 score_dsip=Label(set,text=(f'highscore {hscore}'),bg='gray40',font=('Helvetica 10 bold'))
 speed=Scale(set,from_=100,to=800,orient=HORIZONTAL,length=250,resolution=10,label='spawn speed',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
 pscale=Scale(set,from_=40,to=150,orient=HORIZONTAL,length=250,resolution=10,label='player size',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
+colour=Scale(set,from_=1,to=4,orient=HORIZONTAL,length=250,resolution=1,label='colour',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
 
 start.place(x=20,y=190)
 quit.place(x=400,y=190)
 score_dsip.place(x=215,y=210)
 speed.place(x=125,y=140)
 pscale.place(x=125,y=80)
+colour.place(x=125,y=40)
 speed.set(200)
 pscale.set(50)
 
