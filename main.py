@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import ImageTk, Image
 import random , time
 global health , hscore , sp
 
@@ -21,10 +22,10 @@ def main():
    w = root.winfo_screenwidth()
    x = 10
    y = 10
-   s = 50
    num=0
    score=''
    sp=speed.get()
+   s = pscale.get()
 
 
 
@@ -34,7 +35,6 @@ def main():
        global num,score , sp
 
        multi=(550*(sp/100))
-       print(multi)
        multi=int(multi)
        lives.delete(score)
        score = lives.create_text(165, 25, text=num, font=('Helvetica 30 '),fill='gray100')
@@ -201,12 +201,15 @@ start=Button(set,text='Start',command=START,bg='gray60',width=10)
 quit=Button(set,text='Quit',command=QUIT,bg='gray60',width=10)
 score_dsip=Label(set,text=(f'highscore {hscore}'),bg='gray40',font=('Helvetica 10 bold'))
 speed=Scale(set,from_=100,to=800,orient=HORIZONTAL,length=250,resolution=10,label='spawn speed',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
+pscale=Scale(set,from_=40,to=150,orient=HORIZONTAL,length=250,resolution=10,label='player size',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
 
 start.place(x=20,y=190)
 quit.place(x=400,y=190)
-score_dsip.place(x=215,y=190)
-speed.place(x=125,y=100)
+score_dsip.place(x=215,y=210)
+speed.place(x=125,y=140)
+pscale.place(x=125,y=80)
 speed.set(200)
+pscale.set(50)
 
 
 
@@ -217,7 +220,6 @@ set.mainloop()
 '''
 file name is data.txt
 '''
-
 
 
 
