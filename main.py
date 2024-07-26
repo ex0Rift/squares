@@ -1,5 +1,5 @@
 from tkinter import *
-from PIL import ImageTk, Image
+from tkinter import ttk
 import random , time
 global health , hscore , sp
 
@@ -124,7 +124,8 @@ def main():
 
    canvas = Canvas(root, width=w, height=h, bg='gray40')
    canvas.pack()
-   box = canvas.create_rectangle(x, y, x + s, y + s, fill='green')
+   cool=color.get()
+   box = canvas.create_rectangle(x, y, x + s, y + s, fill=cool)
 
 
    lives = Canvas(root, width=200, height=50, bg='deepskyblue3')
@@ -196,23 +197,33 @@ set.config(bg='gray40')
 set.overrideredirect(True)
 set.geometry(f'{wh}x{ww}+{x}+{y}')
 
+style= ttk.Style()
+style.theme_use('clam')
+style.configure("TCombobox", fieldbackground= "orange", background= "white")
 
 start=Button(set,text='Start',command=START,bg='gray60',width=10)
 quit=Button(set,text='Quit',command=QUIT,bg='gray60',width=10)
 score_dsip=Label(set,text=(f'highscore {hscore}'),bg='gray40',font=('Helvetica 10 bold'))
 speed=Scale(set,from_=100,to=800,orient=HORIZONTAL,length=250,resolution=10,label='spawn speed',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
 pscale=Scale(set,from_=40,to=150,orient=HORIZONTAL,length=250,resolution=10,label='player size',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
-colour=Scale(set,from_=1,to=4,orient=HORIZONTAL,length=250,resolution=1,label='colour',bg='gray40',troughcolor='gray40',highlightbackground='gray45')
+style= ttk.Style()
+style.theme_use('clam')
+style.configure("TCombobox", fieldbackground= "gray10", background= "gray40")
+color=ttk.Combobox(set,width=39,values=['green','purple','gold','blue'])
+color['state']='readonly'
+
+
+
 
 start.place(x=20,y=190)
 quit.place(x=400,y=190)
 score_dsip.place(x=215,y=210)
 speed.place(x=125,y=140)
 pscale.place(x=125,y=80)
-colour.place(x=125,y=40)
+color.place(x=124,y=50)
 speed.set(200)
 pscale.set(50)
-
+color.set('green')
 
 
 
