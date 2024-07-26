@@ -56,13 +56,20 @@ def main():
 
    def COL():
        global health
+
        a = 0
        p = canvas.coords(box)
        # print(p)
        coll = canvas.find_overlapping(p[0], p[1], p[2], p[3])
        coll = list(coll)
+
        #print(coll)
        if len(coll) != 1:
+           root.wm_attributes('-transparentcolor', 'gray41')
+           g = (h+400) // 2
+           hit=Label(root,text='HIT!',bg='gray40',fg='red',font=("Arial", 100, "bold"))
+           hit.place(x=g,y=(h-200))
+           
            if health == 3:
                print('first hit')
                health = 2
@@ -99,7 +106,6 @@ def main():
        rs = random.randint(20, 250)
        canvas.create_rectangle(rx, ry, rx + rs, ry + rs, fill='orange')
        root.after(sp, OBJ)
-
 
 
 
